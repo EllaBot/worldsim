@@ -19,10 +19,10 @@ class TestWorldSim(object):
         # Test just the angular change
         assert_equal(world.theta, WorldSim.TICK_DURATION)
 
-        world = WorldSim(10.0, 10.0, 5.0, 5.0)
+        world = WorldSim(1.0, 1.0, 0.0, 0.0)
         world.linear_velocity = 1.0
         world.angular_velocity = 0.0
         for x in range(12):
             world.tick()
         # Should not have overstepped boundary
-        assert_equal(world.x, 10.0)
+        assert_equal(world.x, 1.0)
