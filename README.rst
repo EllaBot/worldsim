@@ -1,6 +1,8 @@
 worldsim
 ========
 
+.. image:: https://travis-ci.org/EllaBot/worldsim.svg
+
 A world simulator, where the agent can be controlled with linear and angular velocities.
 
 Physics
