@@ -8,7 +8,8 @@ Physics
 
 Given the linear and angular velocities, the position of the agent is calculated as follows:
 
-.. math::
-    \theta \leftarrow (\theta + \omega dx) \mod \frac{\pi}{2}
-    x \leftarrow x + \sin(\theta + \frac{\pi}{2}) \times vdt
-    y \leftarrow y + \cos(\theta + \frac{\pi}{2}) \times vdt
+.. code::
+
+    θ := (θ + ω * dx) mod π/2
+    x := x + sin(θ + π/2) * v * dt
+    y := y + cos(θ + π/2) * v * dt
