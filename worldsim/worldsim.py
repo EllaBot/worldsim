@@ -41,3 +41,7 @@ class WorldSim(object):
         self.theta = (self.theta + self.angular_velocity * WorldSim.TICK_DURATION) % (math.pi / 2.0)
         self.x += math.sin(self.theta + math.pi / 2.0) * self.linear_velocity * WorldSim.TICK_DURATION
         self.y += math.cos(self.theta + math.pi / 2.0) * self.linear_velocity * WorldSim.TICK_DURATION
+
+        # Check for boundary overstepping
+        self.x = min(max(self.x, 0.0), self.width)
+        self.y = min(max(self.y, 0.0), self.height)
