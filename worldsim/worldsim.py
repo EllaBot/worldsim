@@ -1,3 +1,5 @@
+import math
+
 class WorldSim(object):
     TICK_DURATION = 0.10
 
@@ -27,6 +29,7 @@ class WorldSim(object):
         self.height = height
         self.x = initial_x
         self.y = initial_y
+        self.theta = 0.0
 
         # Set velocities
         self.linear_velocity = 0.0
@@ -35,3 +38,6 @@ class WorldSim(object):
     def tick(self):
         """Tick the clock once based on TICK_DURATION
         """
+        self.theta = (self.theta + self.angular_velocity * WorldSim.TICK_DURATION) % (math.pi / 2.0)
+        self.x += math.sin(self.theta + math.pi / 2.0) * self.linear_velocity * WorldSim.TICK_DURATION
+        self.y += math.cos(self.theta + math.pi / 2.0) * self.linear_velocity * WorldSim.TICK_DURATION

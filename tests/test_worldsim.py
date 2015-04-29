@@ -11,4 +11,4 @@ class TestWorldSim(object):
         world.angular_velocity = 0.0
         world.tick()
 
-        assert_equal(world.x, 5.0 + world.TICK_DURATION)
+        assert_equal(world.x, 5.0 + WorldSim.TICK_DURATION)
