@@ -1,4 +1,6 @@
 class WorldSim(object):
+    TICK_DURATION = 0.10
+
     """Simulates a world with an agent.
 
     The agent is controlled by specifiying angular and linear velocities
@@ -25,3 +27,11 @@ class WorldSim(object):
         self.height = height
         self.x = initial_x
         self.y = initial_y
+
+        # Set velocities
+        self.linear_velocity = 0.0
+        self.angular_velocity = 0.0
+
+    def tick(self):
+        """Tick the clock once based on TICK_DURATION
+        """
