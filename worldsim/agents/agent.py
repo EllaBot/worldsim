@@ -15,7 +15,7 @@ class Agent(object):
 
     def act(self):
         # learn, assess, act
-        state = self.world.getstate()
+        state = self.getstate()
         action = self.chooseaction()
 
         self.world.applyaction(action)
