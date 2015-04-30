@@ -4,7 +4,7 @@ from worldsim.agents import State
 from worldsim.tasks import SearchTask
 
 def main():
-    task = SearchTask(5,5)
+    task = SearchTask(5.0, 5.0)
     world = WorldSim(10.0, 10.0, 0, 0, task)
     agent = Agent(world, task)
     agent.linear_velocity = 1.0

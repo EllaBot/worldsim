@@ -12,7 +12,7 @@ class SearchTask(Task):
 
     def reward(self, action, state_prime):
         if state_prime.distance < 0.55 and state_prime.omega < 0.2:
-            return 100
+            return 100.0
 
         return -0.5 * action.linear_velocity
 

@@ -21,7 +21,7 @@ class Agent(object):
         self.world.applyaction(action)
 
     def chooseaction(self):
-        return Action(10 * (random() - 0.5), 10 * (random() - 0.5))
+        return Action(10.0 * (random() - 0.5), 10.0 * (random() - 0.5))
 
     def getstate(self):
         x_diff = self.world.x - self.task.target_x
