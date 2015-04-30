@@ -1,7 +1,6 @@
-from problem import Problem
+from task import Task
 
-
-class SearchProblem(Problem):
+class SearchTask(Task):
     """
     This is the reward function and terminal threshold as set out in
     the search and rescue paper.
@@ -9,7 +8,7 @@ class SearchProblem(Problem):
     def __init__(self, target_x, target_y):
         self.target_x = target_x
         self.target_y = target_y
-        super(SearchProblem,self).__init__()
+        super(SearchTask,self).__init__()
 
     def reward(self, action, state_prime):
         if state_prime.distance < 0.55 and state_prime.omega < 0.2:

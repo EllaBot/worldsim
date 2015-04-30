@@ -1,5 +1,5 @@
 import math
-from problems import SearchProblem
+from tasks import SearchTask
 from agents import Agent
 from agents import State
 
@@ -28,10 +28,10 @@ class WorldSim(object):
     initial_y: float, optional
         The initial y position in meters, where the origin is the bottom left corner
     """
-    def __init__(self, width, height,  initial_x=5, initial_y=5, problem=SearchProblem(5, 5)):
+    def __init__(self, width, height,  initial_x=5, initial_y=5, task=SearchTask(5, 5)):
         self.width = width
         self.height = height
-        self.problem = problem
+        self.task = task
 
         self.x = initial_x
         self.y = initial_y
