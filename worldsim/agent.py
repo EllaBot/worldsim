@@ -1,7 +1,22 @@
+from action import Action
+import math
+
+
 class Agent(object):
-    def __init__(self, initial_x = 0, initial_y = 0):
-        self.angular_velocity = 0
-        self.linear_velocity = 0
-        self.theta = 0
-        self.x = initial_x
-        self.y = initial_y
+    """
+    An agent takes actions from the action space and applies them to the
+    world. Its knowledge comes from the states returned by the world.
+    """
+    def __init__(self, world, problem):
+        self.world = world
+        self.problem = problem
+
+    def act(self):
+        # learn, assess, act
+        state = self.world.getstate()
+        action = self.chooseaction()
+
+        self.world.applyaction(action)
+
+    def chooseaction(self):
+        return Action(1, 1)

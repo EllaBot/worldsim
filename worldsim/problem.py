@@ -1,9 +1,9 @@
 class Problem(object):
     def __init__(self):
-        raise NotImplementedError("Should have implemented this")
+        pass
 
     def stateisfinal(self, state):
         raise NotImplementedError("Should have implemented this")
 
-    def reward(self, state_prime):
+    def reward(self, action, state_prime):
         raise NotImplementedError("Should have implemented this")
