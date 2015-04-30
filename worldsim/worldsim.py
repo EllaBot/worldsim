@@ -1,7 +1,7 @@
 import math
-from search_problem import SearchProblem
-from agent import Agent
-from state import State
+from problems import SearchProblem
+from agents import Agent
+from agents import State
 
 
 class WorldSim(object):

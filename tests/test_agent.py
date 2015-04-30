@@ -1,7 +1,7 @@
 from worldsim import WorldSim
-from worldsim import Agent
-from worldsim import Action
-from worldsim import SearchProblem
+from worldsim.agents import Agent
+from worldsim.agents import Action
+from worldsim.problems import SearchProblem
 import math
 
 from nose.tools import assert_equal
