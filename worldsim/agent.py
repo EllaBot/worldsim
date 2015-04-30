@@ -1,6 +1,7 @@
 from action import Action
 import math
 from random import random
+from state import State
 
 
 class Agent(object):
@@ -21,3 +22,11 @@ class Agent(object):
 
     def chooseaction(self):
         return Action(10 * (random() - 0.5), 10 * (random() - 0.5))
+
+    def getstate(self):
+        x_diff = self.world.x - self.problem.target_x
+        y_diff = self.world.y - self.problem.target_y
+
+        distance = math.sqrt(x_diff ** 2 + y_diff ** 2)
+        omega = math.atan2(y_diff, x_diff)
+        return State(distance, omega)

@@ -23,10 +23,10 @@ class WorldSim(object):
         The height (M) of the world in meters
 
     initial_x: float, optional
-        The initial x position in meters, where the origin is the top left corner
+        The initial x position in meters, where the origin is the bottom left corner
 
     initial_y: float, optional
-        The initial y position in meters, where the origin is the top left corner
+        The initial y position in meters, where the origin is the bottom left corner
     """
     def __init__(self, width, height,  initial_x=5, initial_y=5, problem=SearchProblem(5, 5)):
         self.width = width
@@ -47,12 +47,3 @@ class WorldSim(object):
         # Check for boundary overstepping
         self.x = min(max(self.x, 0.0), self.width)
         self.y = min(max(self.y, 0.0), self.height)
-
-    def getstate(self):
-        x_diff = self.x - self.problem.target_x
-        y_diff = self.y - self.problem.target_y
-
-        distance = math.sqrt(x_diff ** 2 + y_diff ** 2)
-        omega = math.atan2(y_diff, x_diff)
-        return State(distance, omega)
-

@@ -41,19 +41,3 @@ class TestWorldSim(object):
             world.applyaction(action)
         # Should not have overstepped boundary
         assert_equal(world.x, 1.0)
-
-    def test_state(self):
-        world = WorldSim(10, 10, 6, 5)
-        state = world.getstate()
-        assert_almost_equal(state.distance, 1)
-        assert_almost_equal(state.omega, 0)
-
-        world = WorldSim(10, 10, 4, 5)
-        state = world.getstate()
-        assert_almost_equal(state.distance, 1)
-        assert_almost_equal(state.omega, math.pi)
-
-        world = WorldSim(10, 10, 5, 6)
-        state = world.getstate()
-        assert_almost_equal(state.distance, 1)
-        assert_almost_equal(state.omega, math.pi/2)
