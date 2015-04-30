@@ -1,6 +1,6 @@
 from worldsim import WorldSim
-from worldsim import Agent
-from worldsim import Action
+from worldsim.agents import Agent
+from worldsim.agents import Action
 import math
 
 from nose.tools import assert_equal

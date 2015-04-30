@@ -1,7 +1,7 @@
 import math
-from search_problem import SearchProblem
-from agent import Agent
-from state import State
+from tasks import SearchTask
+from agents import Agent
+from agents import State
 
 
 class WorldSim(object):
@@ -28,14 +28,14 @@ class WorldSim(object):
     initial_y: float, optional
         The initial y position in meters, where the origin is the bottom left corner
     """
-    def __init__(self, width, height,  initial_x=5, initial_y=5, problem=SearchProblem(5, 5)):
+    def __init__(self, width, height,  initial_x=5.0, initial_y=5.0, task=SearchTask(5.0, 5.0)):
         self.width = width
         self.height = height
-        self.problem = problem
+        self.task = task
 
         self.x = initial_x
         self.y = initial_y
-        self.theta = 0
+        self.theta = 0.0
 
     def applyaction(self, action):
         """Tick the clock once based on TICK_DURATION
