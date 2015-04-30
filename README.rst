@@ -12,6 +12,6 @@ Given the linear and angular velocities, the position of the agent is calculated
 
 .. code::
 
-    θ := (θ + ω * dx) mod π/2
+    θ := (θ + ω * dx) mod 2π
     x := x + sin(θ + π/2) * v * dt
     y := y + cos(θ + π/2) * v * dt
