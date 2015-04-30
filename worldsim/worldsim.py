@@ -28,21 +28,21 @@ class WorldSim(object):
     initial_y: float, optional
         The initial y position in meters, where the origin is the top left corner
     """
-    def __init__(self, width, height, problem=SearchProblem(5, 5)):
+    def __init__(self, width, height,  initial_x=5, initial_y=5, problem=SearchProblem(5, 5)):
         self.width = width
         self.height = height
         self.problem = problem
 
-        self.x = 5
-        self.y = 5
+        self.x = initial_x
+        self.y = initial_y
         self.theta = 0
 
     def applyaction(self, action):
         """Tick the clock once based on TICK_DURATION
         """
-        self.theta = (self.theta + action.angular_velocity * WorldSim.TICK_DURATION) % (math.pi / 2.0)
+        self.theta = (self.theta + action.angular_velocity * WorldSim.TICK_DURATION) % (math.pi * 2.0)
         self.x += math.sin(self.theta + math.pi / 2.0) * action.linear_velocity * WorldSim.TICK_DURATION
-        self.y += math.cos(self.theta + math.pi / 2.0) * action.linear_velocity * WorldSim.TICK_DURATION
+        self.y += -math.cos(self.theta + math.pi / 2.0) * action.linear_velocity * WorldSim.TICK_DURATION
 
         # Check for boundary overstepping
         self.x = min(max(self.x, 0.0), self.width)

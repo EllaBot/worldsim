@@ -1,5 +1,6 @@
 from action import Action
 import math
+from random import random
 
 
 class Agent(object):
@@ -19,4 +20,4 @@ class Agent(object):
         self.world.applyaction(action)
 
     def chooseaction(self):
-        return Action(1, 1)
+        return Action(10 * (random() - 0.5), 10 * (random() - 0.5))
