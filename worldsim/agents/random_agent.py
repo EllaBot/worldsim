@@ -4,7 +4,7 @@ from random import random
 from state import State
 
 
-class Agent(object):
+class RandomAgent(object):
     """
     An agent takes actions from the action space and applies them to the
     world. Its knowledge comes from the states returned by the world.
