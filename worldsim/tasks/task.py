@@ -5,5 +5,5 @@ class Task(object):
     def stateisfinal(self, state):
         raise NotImplementedError("Should have implemented this")
 
-    def reward(self, action, state_prime):
+    def reward(self, state, action, state_prime):
         raise NotImplementedError("Should have implemented this")
