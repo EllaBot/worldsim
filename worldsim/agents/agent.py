@@ -12,21 +12,14 @@ class Agent(object):
     def __init__(self, world, task):
         self.world = world
         self.task = task
+        self.episode_reward = 0
 
     def act(self):
-        # learn, assess, act
-        state = self.getstate()
-        action = self.chooseaction()
+        pass
 
-        self.world.applyaction(action)
+    def chooseaction(self, state):
+        pass
 
-    def chooseaction(self):
-        return Action(10.0 * (random() - 0.5), 10.0 * (random() - 0.5))
 
-    def getstate(self):
-        x_diff = self.world.x - self.task.target_x
-        y_diff = self.world.y - self.task.target_y
-
-        distance = math.sqrt(x_diff ** 2 + y_diff ** 2)
-        omega = math.atan2(y_diff, x_diff)
-        return State(distance, omega)
+def doubleunitrandom():
+    return 2.0 * (random() - 0.5)

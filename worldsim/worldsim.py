@@ -1,6 +1,6 @@
 import math
 from tasks import SearchTask
-from agents import Agent
+from agents import RandomAgent
 from agents import State
 
 

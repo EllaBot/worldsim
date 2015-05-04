@@ -1,23 +1,35 @@
 from worldsim import WorldSim
-from worldsim.agents import Agent
-from worldsim.agents import State
+from worldsim.agents import RandomAgent, State
 from worldsim.tasks import SearchTask
+import plot_utils
+
+EPISODES = 100
+
 
 def main():
     task = SearchTask(5.0, 5.0)
     world = WorldSim(10.0, 10.0, 0, 0, task)
-    agent = Agent(world, task)
-    agent.linear_velocity = 1.0
-    agent.angular_velocity = 0.0
+    agent = RandomAgent(world, task)
     world.agent = agent
 
     tasksolved = False
-    while tasksolved is False:
-        agent.act()
-        agent_state = agent.getstate()
-        print(agent_state)
-        tasksolved = world.task.stateisfinal(agent_state)
 
+    episode_rewards = []
+    actions_taken = 0
+    for i in xrange(0, EPISODES):
+        while tasksolved is False:
+            agent.act()
+            agent_state = agent.getstate()
+            tasksolved = world.task.stateisfinal(agent_state)
+            actions_taken += 1
+        # print("Random agent took " + str(actions_taken) + " steps to reach the goal.")
+        episode_rewards.append(agent.episode_reward)
+        agent.episode_reward = 0
+        tasksolved = False
+
+    import matplotlib.pyplot as plt
+    plot_utils.plot(episode_rewards)
+    plt.show()
 
 if __name__ == '__main__':
     main()

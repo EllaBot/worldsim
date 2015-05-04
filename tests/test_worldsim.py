@@ -1,5 +1,5 @@
 from worldsim import WorldSim
-from worldsim.agents import Agent
+from worldsim.agents import RandomAgent
 from worldsim.agents import Action
 import math
 

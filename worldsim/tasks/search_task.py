@@ -8,13 +8,13 @@ class SearchTask(Task):
     def __init__(self, target_x, target_y):
         self.target_x = target_x
         self.target_y = target_y
-        super(SearchTask,self).__init__()
+        super(SearchTask, self).__init__()
 
-    def reward(self, action, state_prime):
+    def reward(self, state, action, state_prime):
         if state_prime.distance < 0.55 and state_prime.omega < 0.2:
             return 100.0
 
-        return -0.5 * action.linear_velocity
+        return -0.5 * abs(action.linear_velocity)
 
     def stateisfinal(self, state):
         if state.distance < 0.55:
