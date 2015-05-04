@@ -1,9 +1,9 @@
 from worldsim import WorldSim
-from worldsim.agents import RandomAgent
-from worldsim.agents import State
+from worldsim.agents import RandomAgent, State
 from worldsim.tasks import SearchTask
+import plot_utils
 
-EPISODES = 1000
+EPISODES = 100
 
 
 def main():
@@ -27,7 +27,9 @@ def main():
         agent.episode_reward = 0
         tasksolved = False
 
-    print(episode_rewards)
+    import matplotlib.pyplot as plt
+    plot_utils.plot(episode_rewards)
+    plt.show()
 
 if __name__ == '__main__':
     main()
