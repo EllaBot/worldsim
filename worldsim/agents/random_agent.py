@@ -1,8 +1,8 @@
 from action import Action
 import math
-from random import random
 from state import State
 from agent import Agent, doubleunitrandom
+
 
 class RandomAgent(Agent):
     """
@@ -12,12 +12,19 @@ class RandomAgent(Agent):
     def __init__(self, world, task):
         self.world = world
         self.task = task
+        self.prevstate = None
+        super(RandomAgent, self).__init__(world, task)
 
     def act(self):
         # learn, assess, act
         state = self.getstate()
         action = self.chooseaction(state)
         self.world.applyaction(action)
+
+        if self.prevstate is not None:
+            self.episode_reward += self.task.reward(self.prevstate, action, state)
+
+        self.prevstate = state
 
     def chooseaction(self, state):
         linear_start = Action.RANGES[0][0]

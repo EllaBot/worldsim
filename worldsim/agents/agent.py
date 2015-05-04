@@ -12,6 +12,7 @@ class Agent(object):
     def __init__(self, world, task):
         self.world = world
         self.task = task
+        self.episode_reward = 0
 
     def act(self):
         pass

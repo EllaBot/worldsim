@@ -14,7 +14,7 @@ class SearchTask(Task):
         if state_prime.distance < 0.55 and state_prime.omega < 0.2:
             return 100.0
 
-        return -0.5 * action.linear_velocity
+        return -0.5 * abs(action.linear_velocity)
 
     def stateisfinal(self, state):
         if state.distance < 0.55:
