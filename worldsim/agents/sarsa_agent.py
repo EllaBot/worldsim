@@ -52,7 +52,7 @@ class SarsaAgent(Agent):
             angular_range = Action.RANGES[1][1] - Action.RANGES[1][0]
             return Action(linear_range * doubleunitrandom(), angular_range * doubleunitrandom())
 
-        optimal_params = self.learner.maximize_value([0, 0])
+        optimal_params = self.learner.maximize_value([state.distance, state.omega])
         return Action(optimal_params[0], optimal_params[1])
 
     def getstate(self):
