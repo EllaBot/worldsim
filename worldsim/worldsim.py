@@ -33,6 +33,8 @@ class WorldSim(object):
         self.height = height
         self.task = task
 
+        self._default_x = initial_x
+        self._default_y = initial_y
         self.x = initial_x
         self.y = initial_y
         self.theta = 0.0
@@ -47,3 +49,8 @@ class WorldSim(object):
         # Check for boundary overstepping
         self.x = min(max(self.x, 0.0), self.width)
         self.y = min(max(self.y, 0.0), self.height)
+
+    def reset(self):
+        self.x = self._default_x
+        self.y = self._default_y
+        self.theta = 0.0

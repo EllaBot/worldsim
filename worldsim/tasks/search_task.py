@@ -11,13 +11,14 @@ class SearchTask(Task):
         super(SearchTask, self).__init__()
 
     def reward(self, state, action, state_prime):
-        if state_prime.distance < 0.55 and state_prime.omega < 0.2:
+        # 0.2 degrees = 0.0035 radians
+        if self.stateisfinal(state_prime):
             return 100.0
 
         return -0.5 * abs(action.linear_velocity)
 
     def stateisfinal(self, state):
-        if state.distance < 0.55:
+        if state.distance < 0.55 and state.omega < 0.5:
             return True
 
         return False
