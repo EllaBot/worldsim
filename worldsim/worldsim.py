@@ -2,6 +2,7 @@ import math
 from tasks import SearchTask
 from agents import RandomAgent
 from agents import State
+from random import random
 
 
 class WorldSim(object):
@@ -53,4 +54,7 @@ class WorldSim(object):
     def reset(self):
         self.x = self._default_x
         self.y = self._default_y
+
+        self.x = random() * self.width
+        self.y = random() * self.height
         self.theta = 0.0
