@@ -1,7 +1,8 @@
 from action import Action
 import math
 from state import State
-from agent import Agent, doubleunitrandom
+from agent import Agent
+import random
 import numpy as np
 
 
@@ -28,13 +29,8 @@ class RandomAgent(Agent):
         self.prevstate = state
 
     def chooseaction(self, state):
-        linear_start = Action.RANGES[0][0]
-        angular_start = Action.RANGES[1][0]
-        linear_range = Action.RANGES[0][1] - Action.RANGES[0][0]
-        angular_range = Action.RANGES[1][1] - Action.RANGES[1][0]
-
-        linear_action = linear_range * doubleunitrandom() + linear_start
-        angular_action = angular_range * doubleunitrandom() + angular_start
+        linear_action = random.uniform(Action.RANGES[0][0], Action.RANGES[0][1])
+        angular_action = random.uniform(Action.RANGES[1][0], Action.RANGES[1][1])
         return Action(linear_action, angular_action)
 
     def getstate(self):

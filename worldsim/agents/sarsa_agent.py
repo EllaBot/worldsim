@@ -1,9 +1,9 @@
 from true_online_td_lambda import TrueOnlineTDLambda
 import math
-from random import random
+import random
 from action import Action
 from state import State
-from agent import Agent, doubleunitrandom
+from agent import Agent
 
 
 class SarsaAgent(Agent):
@@ -47,10 +47,11 @@ class SarsaAgent(Agent):
             self._reset()
 
     def chooseaction(self, state):
-        if random() < self.epsilon:
-            linear_range = Action.RANGES[0][1] - Action.RANGES[0][0]
-            angular_range = Action.RANGES[1][1] - Action.RANGES[1][0]
-            return Action(linear_range * doubleunitrandom(), angular_range * doubleunitrandom())
+        if random.random() < self.epsilon:
+
+            linear_action = random.uniform(Action.RANGES[0][0], Action.RANGES[0][1])
+            angular_action = random.uniform(Action.RANGES[1][0], Action.RANGES[1][1])
+            return Action(linear_action,angular_action)
 
         optimal_params = self.learner.maximize_value([state.distance, state.omega])
         return Action(optimal_params[0], optimal_params[1])
