@@ -8,6 +8,7 @@ import time
 def main():
     task = SearchTask(5.0, 5.0)
     world = VisualizedWorldSim(10.0, 10.0, 0, 0, task)
+    world.set_target(task.target_x, task.target_y)
     agent = SarsaAgent(world, task)
     world.agent = agent
 

@@ -19,6 +19,10 @@ class VisualizedWorldSim(WorldSim):
         plt.ion()
         plt.show()
 
+    def set_target(self, target_x, target_y):
+        plt.plot([target_x], [target_y], 'ro')
+        plt.draw()
+
     def applyaction(self, action):
         super(VisualizedWorldSim, self).applyaction(action)
         self.x_history.append(self.x)
@@ -32,6 +36,21 @@ class VisualizedWorldSim(WorldSim):
     def plot(self):
         """Plots the x_history and y_history
         """
-        plt.plot(self.x_history, self.y_history, color='k')
+
+        # Only plot what hasn't been plotted
+        # So that it doesn't have to plot everything
+        # on every plot method call
+        x_to_plot = []
+        y_to_plot = []
+        # Keep the last point in the list since
+        # two points are required for a line
+        for i in range(len(self.x_history) - 1):
+            x_to_plot.append(self.x_history.pop(0))
+        x_to_plot.append(self.x_history[0])
+
+        for i in range(len(self.y_history) - 1):
+            y_to_plot.append(self.y_history.pop(0))
+        y_to_plot.append(self.y_history[0])
+
+        plt.plot(x_to_plot, y_to_plot, color='k')
         plt.draw()
-        time.sleep(0.04)
