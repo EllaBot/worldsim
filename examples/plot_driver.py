@@ -19,8 +19,12 @@ def main():
             agent.act()
             agent_state = agent.getstate()
             tasksolved = world.task.stateisfinal(agent_state)
-            world.plot()
+            if tasksolved:
+                break
 
+        world.plot()
+
+    world.freeze_plot()
 
 if __name__ == '__main__':
     main()

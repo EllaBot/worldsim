@@ -54,3 +54,8 @@ class VisualizedWorldSim(WorldSim):
 
         plt.plot(x_to_plot, y_to_plot, color='k')
         plt.draw()
+
+    def freeze_plot(self):
+        self.plot()
+        plt.ioff()
+        plt.show()
