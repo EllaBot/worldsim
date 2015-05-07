@@ -17,7 +17,7 @@ class SarsaAgent(Agent):
         self.epsilon = 0.1
         self.previousaction = None
         self.previousstate = None
-        state_ranges = [(0, math.sqrt(2) * 10), (0, math.pi * 2.0)]
+        state_ranges = [(0, math.pi * 2.0), (0, math.sqrt(2) * 10)]
         self.learner = TrueOnlineTDLambda(4, state_ranges + Action.RANGES)
         super(SarsaAgent, self).__init__(world, task)
 
@@ -75,7 +75,7 @@ class SarsaAgent(Agent):
             else:
                 omega = 3.0 * math.pi / 2.0
 
-        return State(distance, omega)
+        return State(omega, distance)
 
     def _compose(self, state, action):
         return [state.distance, state.omega, action.linear_velocity, action.angular_velocity]
