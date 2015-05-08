@@ -30,6 +30,7 @@ def main():
         print("Sarsa agent took " + str(actions_taken) + " steps to reach the goal.")
         episode_rewards.append(agent.episode_reward)
         stats_file.write(str(agent.episode_reward) + "\n")
+        stats_file.flush()
         np.save('weights_file', agent.learner.theta)
         agent.episode_reward = 0
         tasksolved = False
