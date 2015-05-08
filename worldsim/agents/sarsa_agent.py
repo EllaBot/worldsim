@@ -17,8 +17,7 @@ class SarsaAgent(Agent):
         self.epsilon = 0.1
         self.previousaction = None
         self.previousstate = None
-        state_ranges = [(0, math.sqrt(2) * 10), (0, math.pi * 2.0)]
-        self.learner = TrueOnlineTDLambda(4, state_ranges + Action.RANGES)
+        self.learner = TrueOnlineTDLambda(4, State.RANGES + Action.RANGES)
         super(SarsaAgent, self).__init__(world, task)
 
     def act(self):
@@ -54,6 +53,7 @@ class SarsaAgent(Agent):
             return Action(linear_action,angular_action)
 
         optimal_params = self.learner.maximize_value([state.distance, state.omega])
+        print optimal_params
         return Action(optimal_params[0], optimal_params[1])
 
     def getstate(self):
@@ -62,19 +62,37 @@ class SarsaAgent(Agent):
         x2 = self.task.target_x
         y2 = self.task.target_y
 
-        x_diff = x1 - x2
-        y_diff = y1 - y2
-        distance = math.sqrt(x_diff ** 2 + y_diff ** 2)
+        x_diff = x2 - x1
+        y_diff = y2 - y1
+        distance = math.sqrt((x_diff ** 2) + (y_diff ** 2))
 
-        if x_diff < 0:
-            omega = math.atan(y_diff / x_diff)
-        elif x_diff > 0:
+        if x_diff < 0 and y_diff > 0:
             omega = math.atan(y_diff / x_diff) + math.pi
+        elif x_diff < 0 and y_diff < 0:
+            omega = math.atan(y_diff / x_diff) + math.pi
+        elif x_diff > 0 and y_diff < 0:
+            omega = math.atan(y_diff/x_diff) + 2.0 * math.pi
+        elif x_diff > 0 and y_diff > 0:
+           omega = math.atan(y_diff/x_diff)
+        elif x_diff == 0 and y_diff == 0:
+            omega = 0
+        elif x_diff == 0 and y_diff > 0:
+            omega = math.pi / 2.0
+        elif x_diff == 0 and y_diff < 0:
+            omega = 3.0 * math.pi / 2.0
+        elif x_diff > 0 and y_diff == 0:
+            # could be 2pi
+            omega = 0
+        elif x_diff < 0 and y_diff == 0:
+            omega = math.pi
+
+        if omega > self.world.theta:
+            omega -= self.world.theta
         else:
-            if y2 > y1:
-                omega = math.pi / 2.0
-            else:
-                omega = 3.0 * math.pi / 2.0
+            omega = self.world.theta - omega
+
+
+        assert omega > 0
 
         return State(distance, omega)
 
