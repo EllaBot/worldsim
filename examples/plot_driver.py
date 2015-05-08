@@ -3,6 +3,8 @@ from worldsim import VisualizedWorldSim
 from worldsim.agents import SarsaAgent, State
 from worldsim.tasks import SearchTask
 from true_online_td_lambda import learner_plotting_utilities
+import numpy as np
+import sys
 import time
 
 def main():
@@ -13,6 +15,10 @@ def main():
     world.agent = agent
 
     tasksolved = False
+
+    if (len(sys.argv) > 1 and sys.argv[1] == '--load'):
+        theta = np.load('weights_file.npy')
+        agent.learner.theta = theta
 
     for x in range(0, 100):
         while tasksolved is False:
