@@ -24,7 +24,6 @@ class SarsaAgent(Agent):
 
         state = self.getstate()
         action = self.chooseaction(state)
-        value_guess = self.learner.value(self._compose(state, action))
 
         self.world.applyaction(action)
 
@@ -53,9 +52,8 @@ class SarsaAgent(Agent):
             angular_action = random.uniform(Action.RANGES[1][0], Action.RANGES[1][1])
             return Action(linear_action,angular_action)
 
-        # optimal_params = self.learner.maximize_value([state.distance, state.omega])
-
-        return self._brute_force_search(state)
+        optimal_params = self.learner.maximize_value([state.distance, state.omega])
+        return Action(optimal_params[0], optimal_params[1])
 
     def getstate(self):
         x1 = self.world.x
