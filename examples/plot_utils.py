@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 
 
 def plot(episode_rewards):
-
-    fig = plt.figure()
+    fig = plt.gcf()
 
     x = [x for x in range(0, len(episode_rewards))]
     y = episode_rewards
@@ -17,3 +16,13 @@ def plot(episode_rewards):
     axes.set_ylabel('Total reward')
 
     plt.draw()
+
+
+def begin():
+    plt.ion()
+    plt.show()
+    plt.figure()
+
+
+def clear():
+    plt.clf()
