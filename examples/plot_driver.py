@@ -14,15 +14,19 @@ def main():
 
     tasksolved = False
 
-    while tasksolved is False:
-        for i in range(10):
-            agent.act()
-            agent_state = agent.getstate()
-            tasksolved = world.task.stateisfinal(agent_state)
-            if tasksolved:
-                break
+    for x in range(0, 100):
+        while tasksolved is False:
+            for i in range(10):
+                agent.act()
+                agent_state = agent.getstate()
+                tasksolved = world.task.stateisfinal(agent_state)
+                if tasksolved:
+                    break
+            world.plot()
 
-        world.plot()
+        world.clear_plot()
+        world.reset()
+        tasksolved = False
 
     world.freeze_plot()
 

@@ -59,3 +59,7 @@ class VisualizedWorldSim(WorldSim):
         self.plot()
         plt.ioff()
         plt.show()
+
+    def clear_plot(self):
+        plt.clf()
+        plt.axis((0.0, self.width, 0.0, self.height))
