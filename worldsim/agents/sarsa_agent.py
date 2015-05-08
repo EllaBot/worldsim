@@ -4,7 +4,7 @@ import random
 from action import Action
 from state import State
 from agent import Agent
-
+import numpy as np
 
 class SarsaAgent(Agent):
     """
@@ -14,7 +14,7 @@ class SarsaAgent(Agent):
     def __init__(self, world, task):
         self.world = world
         self.task = task
-        self.epsilon = 0.1
+        self.epsilon = 0.05
         self.previousaction = None
         self.previousstate = None
         self.learner = TrueOnlineTDLambda(4, State.RANGES + Action.RANGES)
@@ -24,6 +24,7 @@ class SarsaAgent(Agent):
 
         state = self.getstate()
         action = self.chooseaction(state)
+        value_guess = self.learner.value(self._compose(state, action))
 
         self.world.applyaction(action)
 
@@ -52,9 +53,9 @@ class SarsaAgent(Agent):
             angular_action = random.uniform(Action.RANGES[1][0], Action.RANGES[1][1])
             return Action(linear_action,angular_action)
 
-        optimal_params = self.learner.maximize_value([state.distance, state.omega])
-        print optimal_params
-        return Action(optimal_params[0], optimal_params[1])
+        # optimal_params = self.learner.maximize_value([state.distance, state.omega])
+
+        return self._brute_force_search(state)
 
     def getstate(self):
         x1 = self.world.x
@@ -91,8 +92,7 @@ class SarsaAgent(Agent):
         else:
             omega = self.world.theta - omega
 
-
-        assert omega > 0
+        assert omega >= 0
 
         return State(distance, omega)
 
@@ -103,6 +103,12 @@ class SarsaAgent(Agent):
         state = self.previousstate
         action = self.previousaction
         reward = self.task.reward(state, action, state_prime)
+        assert reward < 0
+        # print("Prev state: " + str(state))
+        # print("Prev action: " + str(action))
+        # print("Next state: " + str(state_prime))
+        # print "reward received:" + str(reward)
+        # print "----"
 
         # The learner is smart; it keeps copies of the previous states and actions.
         # We don't need to pass them in.
@@ -112,3 +118,23 @@ class SarsaAgent(Agent):
     def _reset(self):
         self.previousaction = None
         self.previousstate = None
+
+    def _brute_force_search(self, state):
+        max_value = np.finfo(np.float64).min
+        max_l = 0
+        max_a = 0
+        l = Action.RANGES[0][0]
+        a = Action.RANGES[1][0]
+        while a < Action.RANGES[0][1]:
+            while l < Action.RANGES[1][1]:
+                value = self.learner.value(self._compose(state, Action(l,a)))
+                if value > max_value:
+                    max_l = l
+                    max_a = a
+                    max_value = value
+                l += 0.05
+            l = Action.RANGES[0][0]
+            a += 0.05
+        action = Action(max_l, max_a)
+        print Action(max_l, max_a)
+        return action
