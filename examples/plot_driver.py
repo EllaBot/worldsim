@@ -3,6 +3,7 @@ from worldsim import VisualizedWorldSim
 from worldsim.agents import SarsaAgent, State
 from worldsim.tasks import SearchTask
 from true_online_td_lambda import learner_plotting_utilities
+from random import random
 import numpy as np
 import sys
 import time
@@ -31,6 +32,8 @@ def main():
             world.plot()
 
         world.reset()
+        task.target_x = random() * world.width
+        task.target_y = random() * world.height
         world.set_target(task.target_x, task.target_y)
         tasksolved = False
 

@@ -2,6 +2,7 @@ from worldsim import WorldSim
 from worldsim.agents import SarsaAgent, State
 from worldsim.tasks import SearchTask
 from true_online_td_lambda import learner_plotting_utilities
+from random import random
 import numpy as np
 import time
 
@@ -36,6 +37,9 @@ def main():
         tasksolved = False
         actions_taken = 0
         world.reset()
+        # Place the target at a random location
+        task.target_x = random() * world.width
+        task.target_y = random() * world.height
         # Hold the distance at 10, hold the omega at 0
         # plot the x as the linear velocity, y as the angular velocity
         # learner_plotting_utilities.plot_four_feature_value_function(agent.learner, 0, 10, 1, 0)
