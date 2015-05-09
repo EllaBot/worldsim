@@ -19,7 +19,3 @@ class Agent(object):
 
     def chooseaction(self, state):
         pass
-
-
-def doubleunitrandom():
-    return 2.0 * (random() - 0.5)

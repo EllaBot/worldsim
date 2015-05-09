@@ -2,6 +2,7 @@ import math
 from tasks import SearchTask
 from agents import RandomAgent
 from agents import State
+from random import random
 
 
 class WorldSim(object):
@@ -47,3 +48,8 @@ class WorldSim(object):
         # Check for boundary overstepping
         self.x = min(max(self.x, 0.0), self.width)
         self.y = min(max(self.y, 0.0), self.height)
+
+    def reset(self):
+        self.x = random() * self.width
+        self.y = random() * self.height
+        self.theta = 0.0

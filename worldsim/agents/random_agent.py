@@ -1,7 +1,9 @@
 from action import Action
 import math
 from state import State
-from agent import Agent, doubleunitrandom
+from agent import Agent
+import random
+import numpy as np
 
 
 class RandomAgent(Agent):
@@ -16,7 +18,10 @@ class RandomAgent(Agent):
         super(RandomAgent, self).__init__(world, task)
 
     def act(self):
-        # learn, assess, act
+        """Pick a random action and learn nothing.
+
+
+        """
         state = self.getstate()
         action = self.chooseaction(state)
         self.world.applyaction(action)
@@ -27,19 +32,15 @@ class RandomAgent(Agent):
         self.prevstate = state
 
     def chooseaction(self, state):
-        linear_start = Action.RANGES[0][0]
-        angular_start = Action.RANGES[1][0]
-        linear_range = Action.RANGES[0][1] - Action.RANGES[0][0]
-        angular_range = Action.RANGES[1][1] - Action.RANGES[1][0]
+        """Choose an action uniformly at random.
 
-        linear_action = linear_range * doubleunitrandom() + linear_start
-        angular_action = angular_range * doubleunitrandom() + angular_start
+        :param state: The state to act from. Not used.
+        :return: The random action.
+        """
+        linear_action = random.uniform(Action.RANGES[0][0], Action.RANGES[0][1])
+        angular_action = random.uniform(Action.RANGES[1][0], Action.RANGES[1][1])
         return Action(linear_action, angular_action)
 
     def getstate(self):
-        x_diff = self.world.x - self.task.target_x
-        y_diff = self.world.y - self.task.target_y
-
-        distance = math.sqrt(x_diff ** 2 + y_diff ** 2)
-        omega = math.atan2(y_diff, x_diff)
-        return State(distance, omega)
+        State.frompoints(self.world.x, self.world.y, self.world.theta,
+                         self.task.x, self.task.y)
