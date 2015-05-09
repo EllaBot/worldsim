@@ -30,8 +30,8 @@ def main():
                     break
             world.plot()
 
-        world.clear_plot()
         world.reset()
+        world.set_target(task.target_x, task.target_y)
         tasksolved = False
 
     world.freeze_plot()

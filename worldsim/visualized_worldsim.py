@@ -30,8 +30,9 @@ class VisualizedWorldSim(WorldSim):
 
     def reset(self):
         super(VisualizedWorldSim, self).reset()
+        self.clear_plot()
         self.x_history = [self.x]
-        self.y_history = [self.x]
+        self.y_history = [self.y]
 
     def plot(self):
         """Plots the x_history and y_history
