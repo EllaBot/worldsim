@@ -17,7 +17,7 @@ class SarsaAgent(Agent):
         self.epsilon = 0.05
         self.previousaction = None
         self.previousstate = None
-        self.learner = TrueOnlineTDLambda(4, State.RANGES + Action.RANGES, alpha=0.01)
+        self.learner = TrueOnlineTDLambda(4, State.RANGES + Action.RANGES, alpha=0.0001)
         super(SarsaAgent, self).__init__(world, task)
 
     def act(self):
