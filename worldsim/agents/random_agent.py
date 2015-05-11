@@ -3,7 +3,6 @@ import math
 from state import State
 from agent import Agent
 import random
-import numpy as np
 
 
 class RandomAgent(Agent):

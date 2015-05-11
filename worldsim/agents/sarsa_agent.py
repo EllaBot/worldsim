@@ -1,5 +1,4 @@
 from true_online_td_lambda import TrueOnlineTDLambda
-import math
 import random
 from action import Action
 from state import State

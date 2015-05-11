@@ -1,6 +1,3 @@
-import math
-
-
 class Action(object):
     RANGES = [(-1.5, 1.5), (-1.5, 1.5)]
 

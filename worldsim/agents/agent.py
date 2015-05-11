@@ -1,9 +1,3 @@
-from action import Action
-import math
-from random import random
-from state import State
-
-
 class Agent(object):
     """
     An agent takes actions from the action space and applies them to the
