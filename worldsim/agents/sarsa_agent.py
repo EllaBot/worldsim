@@ -19,12 +19,12 @@ class SarsaAgent(Agent):
         self.learner = TrueOnlineTDLambda(4, State.RANGES + Action.RANGES, alpha=0.0001)
         super(SarsaAgent, self).__init__(world, task)
 
-    def act(self):
+    def act(self, maximize=None):
         """Execute one action on the world, possibly terminating the episode.
 
         """
         state = self.getstate()
-        action = self.chooseaction(state)
+        action = self.chooseaction(state, maximize)
 
         self.world.applyaction(action)
 
@@ -48,7 +48,7 @@ class SarsaAgent(Agent):
             self.previousaction = None
             self.previousstate = None
 
-    def chooseaction(self, state):
+    def chooseaction(self, state, maximize):
         """Given a state, pick an action according to an epsilon-greedy policy.
 
         :param state: The state from which to act.
@@ -60,7 +60,13 @@ class SarsaAgent(Agent):
             angular_action = random.uniform(Action.RANGES[1][0], Action.RANGES[1][1])
             return Action(linear_action,angular_action)
 
-        optimal_params = self.learner.maximize_value([state.distance, state.omega])
+        # Use provided maximize function
+        optimal_params = None
+        if maximize is None:
+            optimal_params = self.learner.maximize_value([state.distance, state.omega])
+        else:
+            optimal_params = self.learner.maximize_value([state.distance, state.omega], maximize=maximize)
+
         return Action(optimal_params[0], optimal_params[1])
 
     def getstate(self):
