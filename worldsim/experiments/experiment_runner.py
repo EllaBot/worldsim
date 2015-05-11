@@ -1,8 +1,10 @@
+from worldsim.tasks import SearchTask
 from random import random
 
-def run_experiment(agent, episodes, maximize=None):
-    world = agent.world
-    task = world.task
+def run_experiment(agent, world, episodes, maximize=None):
+    task = SearchTask(5.0, 5.0)
+    world.task = task
+    agent.task = task
     episode_rewards = []
     for i in range(episodes):
         tasksolved = False
@@ -18,7 +20,7 @@ def run_experiment(agent, episodes, maximize=None):
         # Reset world and task
         agent.episode_reward = 0
         world.reset()
-        world.task.target_x = random() * world.width
-        world.task.target_y = random() * world.height
+        task.target_x = random() * world.width
+        task.target_y = random() * world.height
 
     return episode_rewards
