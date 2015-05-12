@@ -1,6 +1,6 @@
 from worldsim import WorldSim
 import matplotlib.pyplot as plt
-import time
+
 
 class VisualizedWorldSim(WorldSim):
 
@@ -25,6 +25,10 @@ class VisualizedWorldSim(WorldSim):
 
     def applyaction(self, action):
         super(VisualizedWorldSim, self).applyaction(action)
+        # These need to be literal numbers or else we'll just
+        # be keeping a reference to them (which the owner can change).
+        assert isinstance(self.x, float)
+        assert isinstance(self.y, float)
         self.x_history.append(self.x)
         self.y_history.append(self.y)
 

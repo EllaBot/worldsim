@@ -10,7 +10,7 @@ class PGAgent(Agent):
         self.world = world
         self.task = task
         self.optimizer = PGPE(4)
-        self.optimizer.theta = np.array([0.1, 0.1, 0.1, 0.1])
+        self.optimizer.theta = np.array([0.01, 0.01, 0.01, 0.01])
         self.currenttheta = -1
         self.perturbedthetas = self.optimizer.getperturbedthetas()
         self.theta = self.perturbedthetas[0]
@@ -42,9 +42,9 @@ class PGAgent(Agent):
         theta = self.theta
         mean1 = theta[0] * state.distance + theta[1] * state.omega
         mean2 = theta[2] * state.distance + theta[3] * state.omega
-        STD_DEV = 10.0
-        linear_velocity = np.random.normal(mean1, STD_DEV, 1)
-        angular_velocity = np.random.normal(mean2, STD_DEV, 1)
+        STD_DEV = 1.0
+        linear_velocity = np.random.normal(mean1, STD_DEV, 1)[0]
+        angular_velocity = np.random.normal(mean2, STD_DEV, 1)[0]
 
         linear_velocity = max(min(1.5, linear_velocity), -1.5)
         angular_velocity = max(min(1.5, angular_velocity), -1.5)
