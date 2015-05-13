@@ -6,10 +6,10 @@ from pg_ella.pgpe import PGPE
 
 
 class PGAgent(Agent):
-    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0]):
+    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0, 1.0, 1.0]):
         self.world = world
         self.task = task
-        self.optimizer = PGPE(4, epsilon=0.05, alphasigma=0.1, alphatheta=0.2)
+        self.optimizer = PGPE(6, epsilon=0.05, alphasigma=0.1, alphatheta=0.2)
         self.optimizer.theta = np.array(initialtheta)
         self.currenttheta = -1
         self.perturbedthetas = self.optimizer.getperturbedthetas()
@@ -37,9 +37,9 @@ class PGAgent(Agent):
         # We would
         linearmean = theta[0] * state.distance + theta[1] * state.omega
         angularmean = theta[2] * state.distance + theta[3] * state.omega
-        STD_DEV = 1.0
-        linear_velocity = np.random.normal(linearmean, STD_DEV, 1)[0]
-        angular_velocity = np.random.normal(angularmean, STD_DEV, 1)[0]
+
+        linear_velocity = np.random.normal(linearmean, abs(theta[4]), 1)[0]
+        angular_velocity = np.random.normal(angularmean, abs(theta[5]), 1)[0]
 
         linear_velocity = max(min(1.5, linear_velocity), -1.5)
         angular_velocity = max(min(1.5, angular_velocity), -1.5)
@@ -65,4 +65,4 @@ class PGAgent(Agent):
     def logepisode(self):
         print "Episode reward: " + str(self.totalreward)
         print "Used theta: " + str(self.theta)
-        print "Theta std devs: " + str(self.optimizer.sigmalist)
+        print "Theta std devs: " + str(self.optimizer.sigmalist[0])

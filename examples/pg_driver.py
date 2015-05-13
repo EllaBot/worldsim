@@ -3,14 +3,14 @@ from worldsim.agents import PGAgent
 from worldsim.tasks import SearchTask
 from reward_plot import RewardPlot
 
-EPISODES = 10000
+EPISODES = 600000
 
 
 def main():
     task = SearchTask(5.0, 5.0)
     # world = VisualizedWorldSim(10.0, 10.0, 8.0, 5.0, task)
     world = WorldSim(10.0, 10.0, 8.0, 5.0, task)
-    agent = PGAgent(world, task, initialtheta=[0, -0.1, 0, 0.1])
+    agent = PGAgent(world, task, initialtheta=[0.3865, 0.007, 0.084, 0.36, -0.0465, 0.01479])
     world.agent = agent
     graph = RewardPlot()
     rewards = []
