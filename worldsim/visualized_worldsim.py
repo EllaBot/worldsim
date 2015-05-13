@@ -15,11 +15,13 @@ class VisualizedWorldSim(WorldSim):
         super(VisualizedWorldSim, self).__init__(*args, **kwargs)
         self.x_history = [self.x]
         self.y_history = [self.y]
+        plt.figure("Visualized WorldSim")
         plt.axis((0.0, self.width, 0.0, self.height))
         plt.ion()
         plt.show()
 
     def set_target(self, target_x, target_y):
+        plt.figure("Visualized WorldSim")
         plt.plot([target_x], [target_y], 'ro')
         plt.draw()
 
@@ -57,6 +59,7 @@ class VisualizedWorldSim(WorldSim):
             y_to_plot.append(self.y_history.pop(0))
         y_to_plot.append(self.y_history[0])
 
+        plt.figure("Visualized WorldSim")
         plt.plot(x_to_plot, y_to_plot, color='k')
         plt.draw()
 
@@ -66,5 +69,6 @@ class VisualizedWorldSim(WorldSim):
         plt.show()
 
     def clear_plot(self):
+        plt.figure("Visualized WorldSim")
         plt.clf()
         plt.axis((0.0, self.width, 0.0, self.height))

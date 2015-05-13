@@ -6,10 +6,10 @@ from pg_ella.pgpe import PGPE
 
 
 class PGAgent(Agent):
-    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0, 1.0, 1.0]):
+    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0, 1.0, 1.0], epsilon=0.1):
         self.world = world
         self.task = task
-        self.optimizer = PGPE(6, epsilon=0.05, alphasigma=0.1, alphatheta=0.2)
+        self.optimizer = PGPE(6, epsilon=epsilon, alphasigma=0.1, alphatheta=0.2)
         self.optimizer.theta = np.array(initialtheta)
         self.currenttheta = -1
         self.perturbedthetas = self.optimizer.getperturbedthetas()
