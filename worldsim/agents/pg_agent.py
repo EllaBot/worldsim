@@ -6,11 +6,11 @@ from pg_ella.pgpe import PGPE
 
 
 class PGAgent(Agent):
-    def __init__(self, world, task):
+    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0]):
         self.world = world
         self.task = task
-        self.optimizer = PGPE(4, epsilon=0.05)
-        self.optimizer.theta = np.array([0.01, 0.01, 0.01, 0.01])
+        self.optimizer = PGPE(4, epsilon=0.05, alphasigma=0.1, alphatheta=0.2)
+        self.optimizer.theta = np.array(initialtheta)
         self.currenttheta = -1
         self.perturbedthetas = self.optimizer.getperturbedthetas()
         self.theta = self.perturbedthetas[0]
@@ -31,11 +31,15 @@ class PGAgent(Agent):
 
     def chooseaction(self, state):
         theta = self.theta
-        mean1 = theta[0] * state.distance + theta[1] * state.omega
-        mean2 = theta[2] * state.distance + theta[3] * state.omega
+        # We would expect a good policy to go forward quickly when
+        # omega is low, and go slow and turn when omega is high
+        # theta[1] will be negative, theta[3] will be high
+        # We would
+        linearmean = theta[0] * state.distance + theta[1] * state.omega
+        angularmean = theta[2] * state.distance + theta[3] * state.omega
         STD_DEV = 1.0
-        linear_velocity = np.random.normal(mean1, STD_DEV, 1)[0]
-        angular_velocity = np.random.normal(mean2, STD_DEV, 1)[0]
+        linear_velocity = np.random.normal(linearmean, STD_DEV, 1)[0]
+        angular_velocity = np.random.normal(angularmean, STD_DEV, 1)[0]
 
         linear_velocity = max(min(1.5, linear_velocity), -1.5)
         angular_velocity = max(min(1.5, angular_velocity), -1.5)
@@ -54,8 +58,6 @@ class PGAgent(Agent):
             self.optimizer.learn(self.prevtotalreward, self.totalreward)
             self.perturbedthetas = self.optimizer.getperturbedthetas()
             self.currenttheta = 0
-            self.prevtotalreward = 0
-            self.totalreward = 0
         self.prevtotalreward = self.totalreward
         self.totalreward = 0
         self.theta = self.perturbedthetas[self.currenttheta]
@@ -63,3 +65,4 @@ class PGAgent(Agent):
     def logepisode(self):
         print "Episode reward: " + str(self.totalreward)
         print "Used theta: " + str(self.theta)
+        print "Theta std devs: " + str(self.optimizer.sigmalist)

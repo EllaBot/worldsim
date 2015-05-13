@@ -1,24 +1,34 @@
-from worldsim import VisualizedWorldSim
+from worldsim import VisualizedWorldSim, WorldSim
 from worldsim.agents import PGAgent
 from worldsim.tasks import SearchTask
-import plot_utils
+from reward_plot import RewardPlot
 
 EPISODES = 10000
 
+
 def main():
     task = SearchTask(5.0, 5.0)
-    world = VisualizedWorldSim(10.0, 10.0, 8.0, 5.0, task)
-    agent = PGAgent(world, task)
+    # world = VisualizedWorldSim(10.0, 10.0, 8.0, 5.0, task)
+    world = WorldSim(10.0, 10.0, 8.0, 5.0, task)
+    agent = PGAgent(world, task, initialtheta=[0, -0.1, 0, 0.1])
     world.agent = agent
-
+    graph = RewardPlot()
+    rewards = []
     for episode in range(0, EPISODES):
-        executeepisode(world, agent)
+        #world.x = 8.0
+        #world.y = 3.0
+        reward = executeepisode(world, agent)
+        graph.plot(reward)
+
 
 MAXSTEPS = 2500
+
 
 def executeepisode(world, agent):
     tasksolved = False
     steps = 0
+    returnreward = None
+    # world.set_target(agent.task.target_x, agent.task.target_y)
     while tasksolved is not True:
         agent.act()
         steps += 1
@@ -27,11 +37,19 @@ def executeepisode(world, agent):
         if steps > MAXSTEPS:
             tasksolved = True
             print "Terminated episode early"
+            returnreward = agent.totalreward
             agent.terminate()
         if steps % 10 is 0:
-            world.plot()
+            # world.plot()
+            pass
     world.reset()
-    world.clear_plot()
+    # world.clear_plot()
+    if returnreward is None:
+        returnreward = agent.prevtotalreward
+    if returnreward == 0:
+        print "hi"
+    return returnreward
+
 
 if __name__ == '__main__':
     main()
