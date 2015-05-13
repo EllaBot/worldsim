@@ -36,6 +36,7 @@ class PGAgent(Agent):
                 self.prevtotalreward = 0
                 self.totalreward = 0
             self.prevtotalreward = self.totalreward
+            self.totalreward = 0
             self.theta = self.perturbedthetas[self.currenttheta]
 
     def chooseaction(self, state):
@@ -56,3 +57,14 @@ class PGAgent(Agent):
         return State.frompoints(self.world.x, self.world.y, self.world.theta,
                                 self.task.target_x, self.task.target_y)
 
+    def terminateearly(self):
+        self.currenttheta += 1
+        if self.currenttheta == 2:
+            self.optimizer.learn(self.prevtotalreward, self.totalreward)
+            self.perturbedthetas = self.optimizer.getperturbedthetas()
+            self.currenttheta = 0
+            self.prevtotalreward = 0
+            self.totalreward = 0
+        self.prevtotalreward = self.totalreward
+        self.totalreward = 0
+        self.theta = self.perturbedthetas[self.currenttheta]
