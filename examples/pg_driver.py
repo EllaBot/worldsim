@@ -1,32 +1,34 @@
-from worldsim import VisualizedWorldSim, WorldSim
-from worldsim.agents import PGAgent
-from worldsim.tasks import SearchTask
-from reward_plot import RewardPlot
 from random import random
 import math
+
+from worldsim import VisualizedWorldSim
+from worldsim.agents import PGAgent
+from worldsim.tasks import SearchTask
+from worldsim.experiments.reward_plot import RewardPlot
+
 
 EPISODES = 600000
 GOODRANDOMPOSITION = [0.575, -0.13, 0.0287, -0.897, -0.3881, 0.02335]
 
 
 def main():
-    task = SearchTask(5.0, 5.0)
+    task = SearchTask(None, None, max_x=10.0, max_y=10.0)
     world = VisualizedWorldSim(10.0, 10.0, 8.0, 3.0, task)
-    # world = WorldSim(10.0, 10.0, 8.0, 3.0, task)
-    agent = PGAgent(world, task, initialtheta=GOODRANDOMPOSITION, epsilon=0.5)
+    agent = PGAgent(world, task, initialtheta=GOODRANDOMPOSITION, epsilon=0.4)
     world.agent = agent
     graph = RewardPlot()
 
     for episode in range(0, EPISODES):
         #world.x = 8.0
         #world.y = 3.0
-        task.target_x = random() * world.width
-        task.target_y = random() * world.height
-        distance = task.target_x ** 2 + world.x ** 2
-        distance += task.target_y ** 2 + world.y ** 2
-        distance = math.sqrt(distance)
+        task = SearchTask(None, None, max_x=10.0, max_y=10.0)
+        world.task = task
+        agent.task = task
+
         reward, steps = executeepisode(world, agent)
         graph.plot(reward)
+
+    graph.freeze()
 
 
 MAXSTEPS = 2500
@@ -55,10 +57,14 @@ def executeepisode(world, agent):
     world.clear_plot()
     if returnreward is None:
         returnreward = agent.prevtotalreward
-    if returnreward == 0:
-        print "hi"
     return returnreward, steps
 
+
+def distance(world, task):
+    d = task.target_x ** 2 + world.x ** 2
+    d += task.target_y ** 2 + world.y ** 2
+    d = math.sqrt(d)
+    return d
 
 if __name__ == '__main__':
     main()

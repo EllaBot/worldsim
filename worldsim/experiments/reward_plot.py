@@ -36,6 +36,6 @@ class RewardPlot():
         plt.figure("Reward Plot")
         plt.clf()
 
-    def freeze_plot(self):
+    def freeze(self):
         plt.ioff()
         plt.show()
