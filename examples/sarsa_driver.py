@@ -7,7 +7,7 @@ from worldsim.experiments.reward_plot import RewardPlot
 from true_online_td_lambda import learner_plotting_utilities
 
 
-EPISODES = 10000
+EPISODES = 100
 
 
 def main():
@@ -29,7 +29,6 @@ def main():
         agent.task = task
         reward, steps = executeepisode(world, agent)
         graph.plot(reward)
-        agent.logepisode()
 
     np.save('weights_file', agent.learner.theta)
     graph.freeze()
@@ -51,6 +50,7 @@ def executeepisode(world, agent):
 
     world.plot()
     reward = agent.episode_reward
+    agent.logepisode()
     agent.episode_reward = 0
     world.reset()
     return reward, steps

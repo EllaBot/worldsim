@@ -61,8 +61,8 @@ def executeepisode(world, agent):
 
 
 def distance(world, task):
-    d = task.target_x ** 2 + world.x ** 2
-    d += task.target_y ** 2 + world.y ** 2
+    d = (task.target_x - world.x) ** 2
+    d += (task.target_y - world.y) ** 2
     d = math.sqrt(d)
     return d
 
