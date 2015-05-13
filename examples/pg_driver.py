@@ -54,17 +54,11 @@ def executeepisode(world, agent):
             pass
     world.plot()
     world.reset()
-    world.clear_plot()
+
     if returnreward is None:
         returnreward = agent.prevtotalreward
     return returnreward, steps
 
-
-def distance(world, task):
-    d = (task.target_x - world.x) ** 2
-    d += (task.target_y - world.y) ** 2
-    d = math.sqrt(d)
-    return d
 
 if __name__ == '__main__':
     main()

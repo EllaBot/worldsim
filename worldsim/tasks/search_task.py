@@ -1,5 +1,7 @@
 from task import Task
 from random import random
+import math
+
 
 class SearchTask(Task):
     """
@@ -27,3 +29,11 @@ class SearchTask(Task):
 
         return False
 
+    def distance(self, x, y):
+        d = (self.target_x - x) ** 2
+        d += (self.target_y - y) ** 2
+        d = math.sqrt(d)
+        if d < 0.55:
+            return 0
+        else:
+            return d - 0.55
