@@ -12,7 +12,7 @@ EPISODES = 100
 
 def main():
     task = SearchTask(None, None, max_x=10.0, max_y=10.0)
-    world = VisualizedWorldSim(10.0, 10.0, 8.0, 5.0, task)
+    world = VisualizedWorldSim(10.0, 10.0, randomizeposition=True)
     agent = SarsaAgent(world, task)
     world.agent = agent
 
@@ -25,7 +25,6 @@ def main():
 
     for i in xrange(0, EPISODES):
         task = SearchTask(None, None, max_x=10.0, max_y=10.0)
-        world.task = task
         agent.task = task
         reward, steps = executeepisode(world, agent)
         graph.plot(reward)

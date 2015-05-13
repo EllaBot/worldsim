@@ -29,18 +29,21 @@ class WorldSim(object):
     initial_y: float, optional
         The initial y position in meters, where the origin is the bottom left corner
     """
-    def __init__(self, width, height,  initial_x=None, initial_y=None, task=SearchTask(5.0, 5.0), randomizeposition=False):
+    def __init__(self, width, height, default_x=None, default_y=None, randomizeposition=None):
+        if randomizeposition is None and (default_x is None and default_y is None):
+            randomizeposition = True
         self.width = width
         self.height = height
-        self.task = task
 
-        self.x = initial_x
-        self.y = initial_y
+        self._default_x = default_x
+        self._default_y = default_y
+
+        self.x = default_x
+        self.y = default_y
         self.theta = 0.0
 
-        self._default_x = initial_x
-        self._default_y = initial_y
         self._randomizeposition = randomizeposition
+        self.reset()
 
     def applyaction(self, action):
         """Tick the clock once based on TICK_DURATION

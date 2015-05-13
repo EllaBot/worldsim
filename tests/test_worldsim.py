@@ -6,37 +6,37 @@ import math
 from nose.tools import assert_equal
 from nose.tools import assert_almost_equal
 
-class TestWorldSim(object):
 
+class TestWorldSim(object):
     def test_applyaction(self):
         action = Action(1.0, 0.0)
-        world = WorldSim(10, 10)
+        world = WorldSim(10, 10, default_x=5.0, default_y=5.0)
         world.applyaction(action)
         # Test just the linear change
         assert_equal(world.x, 5.0 + WorldSim.TICK_DURATION)
 
         action = Action(0.0, 1.0)
-        world = WorldSim(10, 10)
+        world.reset()
         world.applyaction(action)
         # Test just the angular change
         assert_equal(world.theta, WorldSim.TICK_DURATION)
 
-        action = Action(1.0, 1/WorldSim.TICK_DURATION * math.pi/2)
-        world = WorldSim(10, 10)
+        action = Action(1.0, 1 / WorldSim.TICK_DURATION * math.pi / 2)
+        world.reset()
         world.applyaction(action)
         # Test just the linear change
         assert_equal(world.y, 5.0 + WorldSim.TICK_DURATION)
 
-        world = WorldSim(10, 10, 0, 0)
-        world.theta = 0
-        action = Action(1/WorldSim.TICK_DURATION * 9 * math.sqrt(2), 1/WorldSim.TICK_DURATION * math.pi/4)
+        world = WorldSim(10.0, 10.0, default_x=0.0, default_y=0.0)
+        action = Action(1 / WorldSim.TICK_DURATION * 9 * math.sqrt(2),
+                        1 / WorldSim.TICK_DURATION * math.pi / 4)
         world.applyaction(action)
         assert_almost_equal(world.x, 9)
         assert_almost_equal(world.y, 9)
 
     def test_boundary_checking(self):
         action = Action(1.0, 0.0)
-        world = WorldSim(1, 1)
+        world = WorldSim(1, 1, default_y=0.5, default_x=0.5)
         for x in range(12):
             world.applyaction(action)
         # Should not have overstepped boundary
