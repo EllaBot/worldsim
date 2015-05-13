@@ -9,7 +9,7 @@ class PGAgent(Agent):
     def __init__(self, world, task):
         self.world = world
         self.task = task
-        self.optimizer = PGPE(4)
+        self.optimizer = PGPE(4, epsilon=0.05)
         self.optimizer.theta = np.array([0.01, 0.01, 0.01, 0.01])
         self.currenttheta = -1
         self.perturbedthetas = self.optimizer.getperturbedthetas()
@@ -27,17 +27,7 @@ class PGAgent(Agent):
         reward = self.task.reward(state, action, state_prime)
         self.totalreward += reward
         if self.task.stateisfinal(state_prime):
-
-            self.currenttheta += 1
-            if self.currenttheta == 2:
-                self.optimizer.learn(self.prevtotalreward, self.totalreward)
-                self.perturbedthetas = self.optimizer.getperturbedthetas()
-                self.currenttheta = 0
-                self.prevtotalreward = 0
-                self.totalreward = 0
-            self.prevtotalreward = self.totalreward
-            self.totalreward = 0
-            self.theta = self.perturbedthetas[self.currenttheta]
+            self.terminate()
 
     def chooseaction(self, state):
         theta = self.theta
@@ -57,7 +47,8 @@ class PGAgent(Agent):
         return State.frompoints(self.world.x, self.world.y, self.world.theta,
                                 self.task.target_x, self.task.target_y)
 
-    def terminateearly(self):
+    def terminate(self):
+        self.logepisode()
         self.currenttheta += 1
         if self.currenttheta == 2:
             self.optimizer.learn(self.prevtotalreward, self.totalreward)
@@ -68,3 +59,7 @@ class PGAgent(Agent):
         self.prevtotalreward = self.totalreward
         self.totalreward = 0
         self.theta = self.perturbedthetas[self.currenttheta]
+
+    def logepisode(self):
+        print "Episode reward: " + str(self.totalreward)
+        print "Used theta: " + str(self.theta)

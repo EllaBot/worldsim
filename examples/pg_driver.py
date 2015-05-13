@@ -12,26 +12,26 @@ def main():
     world.agent = agent
 
     for episode in range(0, EPISODES):
-        tasksolved = False
-        steps = 0
-        while tasksolved is not True:
-            for x in range(0, 10):
-                agent.act()
-                steps += 1
-                state_prime = agent.getstate()
-                tasksolved = agent.task.stateisfinal(state_prime)
-                if steps > 2500:
-                    print agent.totalreward
-                    agent.terminateearly()
-                    tasksolved = True
-                    print "Terminated rollout early"
-                if tasksolved:
-                    break
+        executeepisode(world, agent)
 
+MAXSTEPS = 2500
+
+def executeepisode(world, agent):
+    tasksolved = False
+    steps = 0
+    while tasksolved is not True:
+        agent.act()
+        steps += 1
+        state_prime = agent.getstate()
+        tasksolved = agent.task.stateisfinal(state_prime)
+        if steps > MAXSTEPS:
+            tasksolved = True
+            print "Terminated episode early"
+            agent.terminate()
+        if steps % 10 is 0:
             world.plot()
-        world.reset()
-        world.clear_plot()
-
+    world.reset()
+    world.clear_plot()
 
 if __name__ == '__main__':
     main()
