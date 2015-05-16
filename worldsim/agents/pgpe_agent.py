@@ -6,7 +6,7 @@ from pg_ella.pgpe import PGPE
 
 
 class PGPEAgent(Agent):
-    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0, 1.0, 1.0], epsilon=0.1, learning=False):
+    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0, 1.0, 1.0], epsilon=0.1, learning=True):
         self.world = world
         self.task = task
         self.optimizer = PGPE(6, epsilon=epsilon, alphasigma=0.1, alphatheta=0.2)
@@ -55,7 +55,7 @@ class PGPEAgent(Agent):
                                 self.task.target_x, self.task.target_y)
 
     def terminate(self):
-        self.logepisode()
+        # self.logepisode()
         if self.learning is False:
             self.totalreward = 0
             return

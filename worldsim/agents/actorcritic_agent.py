@@ -92,7 +92,7 @@ class ActorCriticAgent(Agent):
         action1 = math.sqrt(self.variance) * np.random.randn() + np.dot(self.theta1, phi_s)
         action2 = math.sqrt(self.variance) * np.random.randn() + np.dot(self.theta2, phi_s)
 
-        print(str(action1) + "\t" + str(action2))
+        # print(str(action1) + "\t" + str(action2))
 
         return Action(max(min(Action.RANGES[0][1], action1), Action.RANGES[0][0]), max(min(Action.RANGES[1][1], action2), Action.RANGES[1][0]))
 

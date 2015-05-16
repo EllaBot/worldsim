@@ -7,7 +7,7 @@ from worldsim.tasks import SearchTask
 from worldsim.experiments.reward_plot import RewardPlot
 
 
-EPISODES = 10000
+EPISODES = 1200
 GOODRANDOMPOSITION = [2.06892952, -1.94955721, -0.05661384, 1.97496459, 0.3282779, -0.07758845]
 
 
