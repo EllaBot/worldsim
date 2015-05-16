@@ -1,5 +1,4 @@
 from true_online_td_lambda import TrueOnlineTDLambda
-import math
 import random
 from action import Action
 from state import State
@@ -105,3 +104,6 @@ class SarsaAgent(Agent):
         # actions. We don't need to pass them in.
         self.learner.step(reward, self._compose(state_prime, action_prime))
         self.episode_reward += reward
+
+    def logepisode(self):
+        print "Episode reward: " + str(self.episode_reward)

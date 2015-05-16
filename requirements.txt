@@ -1,4 +1,5 @@
 --index-url https://pypi.python.org/simple/
 
 -e git+git://github.com/EllaBot/true-online-td-lambda.git#egg=true_online_td_lambda
+-e git+git://github.com/EllaBot/PG-ELLA.git#egg=pg_ella
 -e .
