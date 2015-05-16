@@ -11,7 +11,7 @@ def run_experiment(agent, world, episodes, maximize=None):
         while tasksolved is False:
             agent.act(maximize=maximize)
             agent_state = agent.getstate()
-            tasksolved = world.task.stateisfinal(agent_state)
+            tasksolved = agent.task.stateisfinal(agent_state)
 
         # Store the episode reward
         episode_rewards.append(agent.episode_reward)
