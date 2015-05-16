@@ -6,7 +6,7 @@ from pg_ella.pgpe import PGPE
 
 
 class PGPEAgent(Agent):
-    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0, 1.0, 1.0], epsilon=0.1):
+    def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0, 1.0, 1.0], epsilon=0.1, learning=False):
         self.world = world
         self.task = task
         self.optimizer = PGPE(6, epsilon=epsilon, alphasigma=0.1, alphatheta=0.2)
@@ -16,6 +16,9 @@ class PGPEAgent(Agent):
         self.theta = self.perturbedthetas[0]
         self.prevtotalreward = 0
         self.totalreward = 0
+        self.learning = learning
+        if self.learning is False:
+            self.theta = initialtheta
         super(PGPEAgent, self).__init__(world, task)
 
     def act(self):
@@ -53,6 +56,9 @@ class PGPEAgent(Agent):
 
     def terminate(self):
         self.logepisode()
+        if self.learning is False:
+            self.totalreward = 0
+            return
         self.currenttheta += 1
         if self.currenttheta == 2:
             self.optimizer.learn(self.prevtotalreward, self.totalreward)

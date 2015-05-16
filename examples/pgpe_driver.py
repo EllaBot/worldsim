@@ -8,7 +8,7 @@ from worldsim.experiments.reward_plot import RewardPlot
 
 
 EPISODES = 10000
-GOODRANDOMPOSITION = [0.575, -0.13, 0.0287, -0.897, -0.3881, 0.02335]
+GOODRANDOMPOSITION = [2.06892952, -1.94955721, -0.05661384, 1.97496459, 0.3282779, -0.07758845]
 
 
 def main():
