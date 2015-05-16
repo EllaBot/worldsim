@@ -26,8 +26,7 @@ class RewardPlot():
             self.episode_number += 1
             return
 
-        ax = fig.gca()
-        ax.plot(x, y, 'b')
+        plt.gca().plot(x, y, 'b')
         self.lastreward = reward
         self.episode_number += 1
         plt.draw()

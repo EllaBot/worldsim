@@ -5,7 +5,7 @@ import numpy as np
 from pg_ella.pgpe import PGPE
 
 
-class PGAgent(Agent):
+class PGPEAgent(Agent):
     def __init__(self, world, task, initialtheta=[0.0, 0.0, 0.0, 0.0, 1.0, 1.0], epsilon=0.1):
         self.world = world
         self.task = task
@@ -16,7 +16,7 @@ class PGAgent(Agent):
         self.theta = self.perturbedthetas[0]
         self.prevtotalreward = 0
         self.totalreward = 0
-        super(PGAgent, self).__init__(world, task)
+        super(PGPEAgent, self).__init__(world, task)
 
     def act(self):
         state = self.getstate()

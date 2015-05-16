@@ -42,7 +42,7 @@ def executeepisode(world, agent):
         agent_state = agent.getstate()
         # learner_plotting_utilities.plot_four_feature_value_function(agent.learner, 0, agent_state.distance, 1, agent_state.omega)
         steps += 1
-        tasksolved = world.task.stateisfinal(agent_state)
+        tasksolved = agent.task.stateisfinal(agent_state)
         if steps % 200 is 0:
             world.plot()
             pass

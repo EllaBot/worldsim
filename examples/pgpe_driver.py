@@ -2,19 +2,19 @@ from random import random
 import math
 
 from worldsim import VisualizedWorldSim
-from worldsim.agents import PGAgent
+from worldsim.agents import PGPEAgent
 from worldsim.tasks import SearchTask
 from worldsim.experiments.reward_plot import RewardPlot
 
 
-EPISODES = 100000
+EPISODES = 10000
 GOODRANDOMPOSITION = [0.575, -0.13, 0.0287, -0.897, -0.3881, 0.02335]
 
 
 def main():
     task = SearchTask(None, None, max_x=10.0, max_y=10.0)
     world = VisualizedWorldSim(10.0, 10.0, randomizeposition=True)
-    agent = PGAgent(world, task, initialtheta=GOODRANDOMPOSITION, epsilon=0.4)
+    agent = PGPEAgent(world, task, initialtheta=GOODRANDOMPOSITION, epsilon=0.4)
     world.agent = agent
     graph = RewardPlot()
 
